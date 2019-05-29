@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
+<head>
+    <title>Enroll Subscribe Form A Flat Responsive Widget Template </title>
+    <!-- metatags-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords"
+          content="Enroll Subscribe Form A Flat Responsive Widget, Login form widgets, Sign up Web 	forms , Login signup Responsive web form,Flat Pricing table,Flat Drop downs,Registration Forms,News letter Forms,Elements"/>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    } </script>
+    <!-- Meta tag Keywords -->
+    <link href="../static/Calendar/css/style2.css" rel="stylesheet" type="text/css" media="all"/><!--stylesheet-->
+    <link rel="stylesheet" href="../static/Calendar/css/font-awesome.css"><!--font_aswesome_icons-->
+    <link href="http://fonts.googleapis.com/css?family=Basic" rel="stylesheet"><!--online-fonts-->
+    <link href="http://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet"><!--online-fonts-->
+</head>
+<body>
+<script src='../../../../../../../ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
+<script src="../../../../../../../m.servedby-buysellads.com/monetization.js" type="text/javascript"></script>
+<body>
+<div class="w3ls-head">
+    <h1>Ajouter un évènement au Google Calendar</h1>
+    <!--728x90-->
+</div>
+<div class="w3ls-content">
+    <div class="w3ls-headding">
+        <h2>Renseigner les informations</h2>
+    </div>
+    <div class="w3l-form">
+        <form action="/add-event/" method="post">
+            {% csrf_token %}
+            <div class="w3ls-input">
+                <input type="date" name="date" placeholder="Date de l'Evènement" required="required"/>
+            </div>
+            <div class="w3ls-input">
+                <input type="time" name="time" placeholder="Heure de début" required="required"/>
+            </div>
+            <div class="w3ls-input">
+                <input type="time" name="time2" placeholder="Heure de fin" required="required"/>
+            </div>
+            <div class="w3ls-input">
+                <input type="text" name="titre" placeholder="Titre de l'Evènement" required="required"/>
+            </div>
+            <div class="w3ls-input">
+                <textarea name="description" placeholder="Description l'Evènement" required="required"></textarea>
+            </div>
+
+            <div class="w3ls-btn">
+                <!--728x90-->
+                <button type="submit" name="submit">subscribe</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="w3ls-icons">
+    <ul>
+        <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+        <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+        <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+    </ul>
+    <!--728x90-->
+</div>
+<footer><a href="http://templatespoint.net/">TemplatesPoint</a></footer>
+</body>
+</html>
