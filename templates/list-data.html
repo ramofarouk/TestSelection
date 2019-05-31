@@ -8,7 +8,7 @@
     <meta name="author" content="Creative Tim">
 
     <!-- Title -->
-    <title>Rechercher une ville</title>
+    <title>Informations</title>
 
     <!-- Favicon -->
     <link href="{% static 'img/brand/favicon.png' %}" rel="icon" type="image/png">
@@ -21,7 +21,7 @@
 
     <!--Bootstrap.min css-->
     <link rel="stylesheet" href="{% static 'plugins/bootstrap/css/bootstrap.min.css' %}">
-
+    <link href="{% static 'plugins/tabs/style.css' %}" rel="stylesheet" type="text/css">
     <!-- Ansta CSS -->
     <link href="{% static 'css/dashboard.css' %}" rel="stylesheet" type="text/css">
 
@@ -33,23 +33,115 @@
 <body class="bg-gradient-primary">
 <div class="limiter">
     <div class="container-login100">
-        <div class="wrap-login100 p-5">
-            {% for city_weather in weather_data %}
-                <div class="box">
-                    <article class="media">
-                        <div class="media-content">
-                            <div class="content">
-                                <p>
-                                    <span class="title">{{ city_weather.commune }}</span>
-                                    <br>
-                                    <span class="subtitle">{{ city_weather.population }}° F</span>
-                                    <br> {{ city_weather.code }}
-                                </p>
+        <div class="wrap-login100" style="padding: 10%;">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12">
+                    <div class="card pull-up shadow bg-gradient-success">
+                        <div class="card-content" style="padding-left: 7.5%;padding-right: 7.5%;">
+                            <div class="card-body">
+                                <img src="{% static 'img/circle.svg' %}" class="card-img-absolute" alt="circle-image">
+                                <div class="media d-flex">
+                                    <div class="align-self-center">
+                                        <i class="fe fe-arrow-left-circle success font-large-2 text-white float-right"></i>
+                                    </div>
+                                    <div class="media-body text-right">
+                                        <h4 class="text-white">NOM DE LA VILLE</h4>
+                                        <h2 class="text-white mb-0">{{ city_info.city_name }}</h2>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </article>
+                    </div>
                 </div>
-            {% endfor %}
+                <div class="col-xl-6 col-lg-6">
+                    <div class="card pull-up shadow bg-gradient-warning">
+                        <div class="card-content" style="padding-left: 7.5%;padding-right: 7.5%;">
+                            <div class="card-body">
+                                <img src="{% static 'img/circle.svg' %}" class="card-img-absolute" alt="circle-image">
+                                <div class="media d-flex">
+                                    <div class="align-self-center">
+                                        <i class="fe fe-arrow-left-circle success font-large-2 text-white float-right"></i>
+                                    </div>
+                                    <div class="media-body text-right">
+                                        <h4 class="text-white">LONGITUDE</h4>
+                                        <h2 class="text-white mb-0">{{ city_info.longitude }}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6">
+                    <div class="card pull-up shadow bg-gradient-danger">
+                        <div class="card-content">
+                            <div class="card-body" style="padding-left: 50px;padding-right: 50px;">
+                                <img src="{% static 'img/circle.svg' %}" class="card-img-absolute" alt="circle-image">
+                                <div class="media d-flex">
+                                    <div class="align-self-center">
+                                        <i class="fe fe-arrow-left-circle success font-large-2 text-white float-right"></i>
+                                    </div>
+                                    <div class="media-body text-right">
+                                        <h4 class="text-white">LATITUDE</h4>
+                                        <h2 class="text-white mb-0">{{ city_info.latitude }}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6">
+                    <div class="card pull-up shadow bg-gradient-warning">
+                        <div class="card-content" style="padding-left: 7.5%;padding-right: 7.5%;">
+                            <div class="card-body">
+                                <img src="{% static 'img/circle.svg' %}" class="card-img-absolute" alt="circle-image">
+                                <div class="media d-flex">
+                                    <div class="align-self-center">
+                                        <i class="fe fe-arrow-left-circle success font-large-2 text-white float-right"></i>
+                                    </div>
+                                    <div class="media-body text-right">
+                                        <h4 class="text-white">NOMBRE D'HABITANTS</h4>
+                                        <h2 class="text-white mb-0">{{ city_info.people_count }}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6">
+                    <div class="card pull-up shadow bg-gradient-danger">
+                        <div class="card-content">
+                            <div class="card-body" style="padding-left: 50px;padding-right: 50px;">
+                                <img src="{% static 'img/circle.svg' %}" class="card-img-absolute" alt="circle-image">
+                                <div class="media d-flex">
+                                    <div class="align-self-center">
+                                        <i class="fe fe-arrow-left-circle success font-large-2 text-white float-right"></i>
+                                    </div>
+                                    <div class="media-body text-right">
+                                        <h4 class="text-white">TARIF</h4>
+                                        <h2 class="text-white mb-0">
+                                            <!-- Traitement et Affichage du prix en fonction du nombre d'habitants -->
+                                            {% if city_info.people_count >= 1000 %}
+                                                {% if city_info.people_count > 30000 %}
+                                                    50€
+                                                {% else %}
+                                                    {% if city_info.people_count > 9000 %}
+                                                        30€
+                                                    {% else %}
+                                                        10€
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% else %}
+                                                5€
+                                            {% endif %}
+                                        </h2>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

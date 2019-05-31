@@ -1,24 +1,48 @@
-import json
 import requests
-import simplejson as simplejson
 from django.http import HttpResponse
-from django.shortcuts import render
-
+from django.shortcuts import render, redirect
 from CityChecking.forms import CityForm
-from CityChecking.models import *
 
 
-def home(request):
-    return render(request, "index.html")
+# Vue pour la page d'accueil
+def index(request):
+    return render(request, 'index.html')
 
 
+# Vue pour la page disant qu'aucune ville n'été trouvé
+def not_found(request):
+    return render(request, 'not-found.html')
+
+
+# Vue pour la page de saisie de la ville
 def city_check(request):
-    if request.method == 'POST':
-        return render(request, "list-data.html")
+    if request.method == 'POST':  # Si l'utilisateur  a renseigné une ville
+        city_name = request.POST["city_name"]
+        return redirect('list_data', city_name=city_name)
     else:
         return render(request, "city-check.html")
 
 
+# Vue pour la page affichant les infos d'une ville
+def list_data(request, city_name):
+    url = 'https://geo.api.gouv.fr/communes?nom=' + city_name + '&fields=nom,code,codesPostaux,codeDepartement,codeRegion,population,centre&format=json&geometry=centre'
+    r = requests.get(url).json()
+    if len(r) == 0:
+        return redirect('/not-found/')
+    else:
+        city_info = {
+            'city_name': r[0]['nom'],
+            'latitude': r[0]['centre']['coordinates'][1],
+            'longitude': r[0]['centre']['coordinates'][0],
+            'people_count': r[0]['population'],
+        }
+
+        context = {'city_info': city_info}
+        print(context)
+        return render(request, 'list-data.html', context)
+
+
+# Vue pour le chargement des villes
 def loading_data(request):
     url = 'https://geo.api.gouv.fr/departements/01/communes'
 
@@ -26,35 +50,15 @@ def loading_data(request):
         form = CityForm(request.POST)
         form.save()
     else:
-        weather_data = []
+        all_data = []
         r = requests.get(url).json()
-        commune_info = {
-            'commune': r[0],
-            'population': r[1],
-            'code': r[2],
+        city_info = {
+            'nom_ville': r[0],
+            'latitude': r[2],
+            'longitude': r[1],
+            'people_count': r[3],
         }
 
-        weather_data.append(commune_info)
-        context = {'weather_data': weather_data}
+        all_data.append(city_info)
+        context = {'city_data': all_data}
     return HttpResponse(context, mimetype='application/json')
-
-
-def index(request):
-    url = 'https://geo.api.gouv.fr/departements/01/communes'
-
-    if request.method == 'POST':
-        form = CityForm(request.POST)
-        form.save()
-    else:
-        weather_data = []
-        r = requests.get(url).json()
-        commune_info = {
-            'commune': r[0],
-            'population': r[1],
-            'code': r[2],
-        }
-
-        weather_data.append(commune_info)
-
-    context = {'weather_data': weather_data}
-    return render(request, 'index.html', context)

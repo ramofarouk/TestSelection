@@ -8,18 +8,30 @@ from googleapiclient import discovery
 from oauth2client import tools
 from oauth2client.client import OAuth2WebServerFlow
 from oauth2client.file import Storage
+import datetime
 
 
+# Vue pour la page de saisie des informations
 def add_event(request):
     if request.method == 'POST':
-        form_valid()
-        return redirect('/add-event/')
+        date = request.POST["date"]
+        time_start = request.POST["time_start"]
+        time_end = request.POST["time_end"]
+        title = request.POST["title"]
+        description = request.POST["description"]
+        form_valid(date, time_start, time_end, title, description)
+        return redirect('/send-success/')
     else:
         return render(request, "add-event.html")
 
 
+# Vue pour le message de succès
+def send_success(request):
+    return render(request, "send-success.html")
+
+
 # ---------------------------------------------------------------------------
-# google_calendar_connection
+# Fonction pour la connexion au Google Calendar
 # ---------------------------------------------------------------------------
 def google_calendar_connection():
     flags = tools.argparser.parse_args([])
@@ -34,8 +46,6 @@ def google_calendar_connection():
     if credentials is None or credentials.invalid is True:
         credentials = tools.run_flow(flow, storage, flags)
 
-        # Create an httplib2.Http object to handle our HTTP requests and authorize it
-        # with our good Credentials.
     http = httplib2.Http()
     http = credentials.authorize(http)
     service = discovery.build('calendar', 'v3', http=http)
@@ -43,23 +53,24 @@ def google_calendar_connection():
     return service
 
 
-def form_valid():
+# Fonction pour l'envoi des données au Google Calendar
+def form_valid(date, time_start, time_end, title, description):
     """
     This method used for add event in google calendar.
     """
     service = google_calendar_connection()
+    date_time_start_str = date + 'T' + time_start + ':00+00:00'
+    date_time_end_str = date + 'T' + time_end + ':00+00:00'
     event = {
-        'summary': "new",
-        'location': "london",
-        'description': "anything",
+        'summary': title,
+        'description': description,
         'start': {
-            'date': "2019-07-02",
+            'dateTime': date_time_start_str,
         },
         'end': {
-            'date': "2019-09-02",
+            'dateTime': date_time_end_str,
         },
     }
 
     event_request = service.events().insert(calendarId='primary', body=event).execute()
     print(event_request)
-    # return CreateView.form_valid(self,form)

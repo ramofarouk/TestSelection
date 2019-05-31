@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from CityChecking.views import *
 from GoogleCalendarAdding.views import *
 
@@ -24,6 +24,7 @@ urlpatterns = [
     path('', index),
     path('city-check/', city_check),
     path('add-event/', add_event),
-    # path('loading_data/', loading_data),
-    url(r'^loading_data/', loading_data),
+    path('send-success/', send_success),
+    path('not-found/', not_found),
+    path(r'list-data/<city_name>', list_data, name='list_data'),
 ]

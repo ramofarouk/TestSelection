@@ -1,5 +1,5 @@
-from django.forms import ModelForm, TextInput
-from .models import Communes
+from django.forms import ModelForm, TextInput, forms
+from .models import Communes, Users
 
 
 class CityForm(ModelForm):
