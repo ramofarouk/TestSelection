@@ -29,7 +29,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'simple_autocomplete',
     'dal',
     'dal_select2',
     'django.contrib.admin',
@@ -38,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'CityChecking'
+    'CityChecking',
+    'GoogleCalendarAdding'
 ]
 
 MIDDLEWARE = [

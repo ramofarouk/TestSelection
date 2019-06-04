@@ -58,9 +58,9 @@ def form_valid(date, time_start, time_end, title, description):
     """
     This method used for add event in google calendar.
     """
-    service = google_calendar_connection()
-    date_time_start_str = date + 'T' + time_start + ':00+00:00'
-    date_time_end_str = date + 'T' + time_end + ':00+00:00'
+    service = google_calendar_connection()  # Connexion
+    date_time_start_str = date + 'T' + time_start + ':00+00:00'  # Conversion pour la date et heure de début
+    date_time_end_str = date + 'T' + time_end + ':00+00:00'  # Conversion pour la date et heure de fin
     event = {
         'summary': title,
         'description': description,
@@ -72,5 +72,5 @@ def form_valid(date, time_start, time_end, title, description):
         },
     }
 
-    event_request = service.events().insert(calendarId='primary', body=event).execute()
+    event_request = service.events().insert(calendarId='primary', body=event).execute()  # Exécution
     print(event_request)
