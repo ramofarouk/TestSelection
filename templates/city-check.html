@@ -49,13 +49,7 @@
                     <input type="text" name="city_name" placeholder="Nom d'une ville" id=”txtSearch”
                            required class="awesomplete" list="mylist">
                     <datalist id="mylist">
-                        <option>Ada</option>
-                        <option>Java</option>
-                        <option>JavaScript</option>
-                        <option>Brainfuck</option>
-                        <option>LOLCODE</option>
-                        <option>Node.js</option>
-                        <option>Ruby on Rails</option>
+
                     </datalist>
 
                 </div>
@@ -100,13 +94,13 @@
             }
         });
         console.log("end");
-
+        //Récupération des villes et Assignation
         let dataList = document.getElementById("mylist");
         let form = document.getElementById("form");
-        // Create a new XMLHttpRequest.
+        // Créer a nouveau XMLHttpRequest.
         let request = new XMLHttpRequest();
 
-        // Handle state changes for the request.
+        // Requête lors du changement d'état
         request.onreadystatechange = function (response) {
             if (request.readyState === 4) {
                 if (request.status === 200) {
@@ -118,7 +112,7 @@
                         // Create a new <option> element.
                         let option = document.createElement('option');
                         // Set the value using the item in the JSON array.
-                        option.value = "test";
+                        option.value = item["nom"];
                         // Add the <option> element to the <datalist>.
                         dataList.appendChild(option);
                     });
@@ -127,7 +121,7 @@
                 }
             }
         };
-        // Set up and make the request.
+        // Envoi de la requête
         request.open('GET', 'https://geo.api.gouv.fr/departements/01/communes', true);
         request.send();
     });
