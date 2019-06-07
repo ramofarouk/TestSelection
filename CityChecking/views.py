@@ -20,7 +20,7 @@ def city_check(request):
         city_name = request.POST["city_name"]
         return redirect('list_data', city_name=city_name)
     else:
-        return render(request, "city-check.html")
+        return render(request, "city-check2.html")
 
 
 # Vue pour la page affichant les infos d'une ville
@@ -41,24 +41,3 @@ def list_data(request, city_name):
         print(context)
         return render(request, 'list-data.html', context)
 
-
-# Vue pour le chargement des villes
-def loading_data(request):
-    url = 'https://geo.api.gouv.fr/departements/01/communes'
-
-    if request.method == 'POST':
-        form = CityForm(request.POST)
-        form.save()
-    else:
-        all_data = []
-        r = requests.get(url).json()
-        city_info = {
-            'nom_ville': r[0],
-            'latitude': r[2],
-            'longitude': r[1],
-            'people_count': r[3],
-        }
-
-        all_data.append(city_info)
-        context = {'city_data': all_data}
-    return HttpResponse(context, mimetype='application/json')

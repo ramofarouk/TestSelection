@@ -2,8 +2,6 @@ import httplib2
 from django.shortcuts import render, redirect
 
 # Create your views here.
-from django.views.generic import CreateView
-
 from googleapiclient import discovery
 from oauth2client import tools
 from oauth2client.client import OAuth2WebServerFlow
@@ -36,8 +34,9 @@ def send_success(request):
 def google_calendar_connection():
     flags = tools.argparser.parse_args([])
     flow = OAuth2WebServerFlow(
-        client_id='885650566355-dh7b646frijk6g8229bpq6c5oo2bsuan.apps.googleusercontent.com',
-        client_secret='m88jox8HcjxFzfoAS9SnI7Q5',
+        # Remplacer avec votre client_id
+        client_id='votre_id_client.apps.googleusercontent.com',
+        client_secret='client_secret',  # Remplacer avec votre client_secret
         scope='https://www.googleapis.com/auth/calendar',
         user_agent='<application name>'
     )
@@ -70,6 +69,15 @@ def form_valid(date, time_start, time_end, title, description):
         'end': {
             'dateTime': date_time_end_str,
         },
+        'organizer': {
+            'email': 'omarharden228@gmail.com',
+            'self': False
+        },
+        'creator': {
+            'email': 'omarharden228@gmail.com',
+            'self': False
+        },
+
     }
 
     event_request = service.events().insert(calendarId='primary', body=event).execute()  # Exécution
